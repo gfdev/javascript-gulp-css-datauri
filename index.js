@@ -6,83 +6,72 @@ const through = require('through2')
     , path = require('path')
     , fs = require('fs')
     , mime = require('mime')
-    , gutil = require('gulp-util');
+    , gutil = require('gulp-util')
+    , PLUGIN_NAME = 'gulp-css-datauri'
+    , RE_DATA_URI = /^data:(?:[a-z0-9-\.]+\/[a-z0-9-\.]+;base64)?,/
+    , RE_EXTERNAL = /^(?:https?:)?\/\//;
 
-//const DATA_URI_RE = /(?:['"])?data:[^,].*,[^-A-Za-z0-9+/=]|=[^=]|={3,}$/;
+let cache = new Map()
+    , index = new Map();
 
 module.exports = function() {
-    return through.obj((file, encoding, callback) => {
+    return through.obj(function(file, encoding, callback) {
+        if (file.isNull()) return callback(null, file);
+
         let content = file.contents.toString()
-            , index = 0;
+            , i = 0
+            , promises = [];
 
         while (true) {
-            index = content.indexOf('url(', index);
+            i = content.indexOf('url(', i);
 
-            if (index == -1) break;
+            if (i == -1) break;
 
-            let end = content.indexOf(')', index + 1);
-            let url = content.substring(index + 4, end);
+            let end = content.indexOf(')', i + 1)
+                , url = content.substring(i + 4, end)
+                , trimmed = trim(url.replace(/['"]/g, '')).replace(/[?#].*/, '');
 
-            index = end;
+            if (!RE_DATA_URI.test(trimmed)) {
+                if (cache.has(trimmed)) {
+                    if (!index.has(url)) index.set(url, trimmed);
+
+                    i = end;
+
+                    continue;
+                }
+
+                index.set(url, trimmed);
+
+                promises.push(new Promise((resolve, reject) => {
+                    let filename = path.join(path.dirname(file.path), trimmed);
+
+                    if (fs.existsSync(filename)) {
+                        let binary = fs.readFileSync(filename);
+
+                        cache.set(trimmed, packToDataURI(mime.lookup(filename), binary));
+
+                        resolve();
+                    } else {
+                        gutil.log(gutil.colors.cyan(PLUGIN_NAME), 'can\'t open file', gutil.colors.red(filename));
+
+                        resolve();
+                    }
+                }));
+            }
+
+            i = end;
         }
 
-        // processFile(file).then((result) => {
-        //     for (let data of result) {
-        //         content = content.split(data.url).join(data.content);
-        //     }
-        //
-        //     file.contents = new Buffer(content);
-        //
-        //     callback(null, file);
-        // });
+        Promise.all(promises).then(result => {
+            //file.contents = new Buffer(content);
+
+            //content = content.split(url).join(packToDataURI(mime.lookup(filename), binary));
+
+            callback(null, file);
+        });
     });
 };
 
-function processFile(file) {
-    return new Promise((resolve, reject) => {
-        let content = file.contents.toString();
-        let urls = getURLs(content);
-        let result = [];
-
-        console.log(urls);
-
-        for (let url of urls) {
-            let filename = path.join(path.dirname(file.path), trimFilename(url));
-
-            if (fs.existsSync(filename)) {
-                let binary = fs.readFileSync(filename);
-
-                result.push({ url: url, content: packToDataURI(mime.lookup(filename), binary) });
-            }
-        }
-
-        resolve(result);
-    });
-}
-
-function getURLs(content) {
-    let urls = [],
-        index = 0;
-
-    while (true) {
-        index = content.indexOf('url(', index);
-
-        if (index == -1) break;
-
-        let end = content.indexOf(')', index + 1);
-
-        urls.push(content.substring(index + 4, end));
-
-        index = end;
-    }
-
-    return urls;
-}
-
 function packToDataURI(mimetype, binary) {
     return ['"', 'data:', mimetype, ';base64,', binary.toString('base64'), '"'].join('');
-}
-
-function trimFilename(name) {
-    return trim(name).replace(/['"]/g, '').replace(/[?#].*/, '');
 }
