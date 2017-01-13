@@ -1,0 +1,199 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto/Roboto-Bold.eot");
+  src: url("../fonts/roboto/Roboto-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Bold.woff2") format("woff2"), url("../fonts/roboto/Roboto-Bold.woff") format("woff"), url("../fonts/roboto/Roboto-Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+li {
+  background:
+    url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)
+    no-repeat
+    left center;
+  padding: 5px 0 5px 25px;
+}
+
+
+ul.checklist li.complete {
+  padding-left: 20px;
+  background:white  url(   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD///+l2Z/dAAAAM0lEQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8yw83NDDeNGe4Ug9C9zwz3gVLMDA/A6P9/AFGGFyjOXZtQAAAAAElFTkSuQmCC') no-repeat scroll left top; }
+
+
+/*Dark Theme Palette*/
+@white: #ffffff;
+@slate-grey: #54606a;
+@shadow-transparent: rgba(255, 255, 255, 0.1);
+/*Dark Theme Palette*/
+
+
+
+
+body,#page_container_page{
+  background-color: transparent;
+}
+
+#layout{
+
+#header {
+
+.navbar-fixed {
+
+nav {
+  background-color: @slate-grey !important;
+  box-shadow: none !important;
+
+.nav-wrapper {
+
+.document-properties {
+
+.document-info-area {
+
+.properties-block {
+
+.document-name {
+  color: @white !important;
+}
+
+.document-type, .document-date {
+  color: @white !important;
+  opacity: 0.8 !important;
+}
+}
+}
+}
+
+.document-actions {
+
+.action-item {
+
+.btn {
+  color: @slate-grey !important;
+}
+
+a, a:hover {
+  color: @white !important;
+}
+
+&.close {
+   display: list-item !important;
+   box-shadow: 1px 0 0 @shadow-transparent inset !important;
+ }
+}
+}
+}
+}
+}
+}
+
+.content {
+
+#ThumbnailComponent {
+  box-shadow: 1px 0 0 @shadow-transparent !important;
+
+.page_wrapper {
+
+.thumbnail_num {
+  color: @white !important;
+  opacity: 0.7 !important;
+}
+
+&.active .thumbnail_num {
+   opacity: 1 !important;
+ }
+}
+}
+
+#rightSidePanel {
+  box-shadow: 1px 0 0 @shadow-transparent inset !important;
+
+.panelContent {
+
+.headers {
+
+ul {
+
+li {
+
+a {
+  color: @white !important;
+}
+}
+}
+}
+
+.content {
+tr {
+
+td {
+
+.editable {
+  position: relative !important;
+
+&:after {
+   height: 1px !important;
+   content: "" !important;
+   position: absolute !important;
+   right: 0 !important;
+   bottom: -2px !important;
+   left: 0 !important;
+   border-bottom: 1px dashed @white !important;
+   opacity: 0.3 !important;
+ }
+}
+}
+
+td:first-child {
+  color: @white !important;
+  opacity: 0.7 !important;
+}
+
+td:last-child {
+  color: @white !important;
+}
+}
+}
+}
+}
+}
+
+.property-editor {
+
+&__container {
+
+[class^="icon-"], [class*=" icon-"] {
+  color: @white !important;
+}
+}
+}
+
+.doc-tags {
+
+.chip {
+
+&.icon-edit {
+   color: @white;
+   background-color: transparent !important;
+ }
+}
+}
+
+[class^="icon-edit"], [class*=" icon-edit"] {
+  color: @white !important;
+}
+
+.document-icon {
+  background-image: url('../assets/') !important;
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+  background-image: url('../assets/') !important;
+  background-size: 18px 360px !important;
+}
+}
+}
+

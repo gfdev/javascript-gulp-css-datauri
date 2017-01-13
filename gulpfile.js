@@ -1,5 +1,7 @@
 const gulp = require('gulp')
-    , CssDataURI = require('./index');
+    , CssDataURI = require('./dist/index.js');
+
+console.log(CssDataURI);
 
 gulp.task('default', [], function () {
     gulp.src(['css/*.css'])
