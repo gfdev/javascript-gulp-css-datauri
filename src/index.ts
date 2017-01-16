@@ -70,7 +70,12 @@ export default function() {
 
             //content = content.split(url).join(packToDataURI(mime.lookup(filename), binary));
 
+            console.log(index);
+
             callback(null, file);
+        }).catch(() => {
+            console.warn('ERROR!');
+            console.log(arguments);
         });
     });
 }

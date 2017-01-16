@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "noImplicitAny": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "allowJs": false,
     "typeRoots": [
       "node_modules/@types"
     ],

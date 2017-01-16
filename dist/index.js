@@ -53,6 +53,8 @@ module.exports =
 
 	exports.default = function () {
 	    return _through2.default.obj(function (file, encoding, callback) {
+	        var _arguments = arguments;
+
 	        if (file.isNull()) return callback(null, file);
 	        var content = file.contents.toString(),
 	            i = 0,
@@ -100,7 +102,11 @@ module.exports =
 	        Promise.all(promises).then(function (result) {
 	            //file.contents = new Buffer(content);
 	            //content = content.split(url).join(packToDataURI(mime.lookup(filename), binary));
+	            console.log(index);
 	            callback(null, file);
+	        }).catch(function () {
+	            console.warn('ERROR!');
+	            console.log(_arguments);
 	        });
 	    });
 	};
@@ -143,6 +149,7 @@ module.exports =
 	function packToDataURI(mimetype, binary) {
 	    return ['"', 'data:', mimetype, ';base64,', binary.toString('base64'), '"'].join('');
 	}
+	module.exports = exports['default'];
 
 /***/ },
 /* 1 */
